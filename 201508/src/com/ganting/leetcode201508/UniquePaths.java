@@ -17,6 +17,9 @@ import java.util.Map;
  * The robot can only move either down or right at any point in time.
  * The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
  * <p>
+ * 
+ * DP动态规划
+ * 
  * author by ganting
  * date 2015-08-11
  * since v1.0.0
@@ -42,6 +45,32 @@ public class UniquePaths {
             }
         }
         return d[m-1][n-1];
+    }
+    
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int row = obstacleGrid.length;
+        int column = obstacleGrid[0].length;
+        if (row == 0 && column == 0) return -1;
+        if (row == 1 && column == 1) return obstacleGrid[0][0] ^ 1;
+        for ( int i = 0; i < row; i++) {
+            for ( int j = 0; j < column; j++) {
+                if ( i == 0 && j == 0 )
+                    obstacleGrid[i][j] = obstacleGrid[i][j] ^ 1;
+                else {
+                    if ( obstacleGrid[i][j] == 1 ) {
+                        obstacleGrid[i][j] = 0;
+                    } else {
+                        if ( i == 0 )
+                            obstacleGrid[i][j] = obstacleGrid[i][j-1];       
+                        else if ( j == 0)
+                            obstacleGrid[i][j] = obstacleGrid[i-1][j];
+                        else
+                            obstacleGrid[i][j] = obstacleGrid[i-1][j] + obstacleGrid[i][j-1]; 
+                    }
+                }
+            }
+        }
+        return obstacleGrid[row-1][column-1];   
     }
 
 }
