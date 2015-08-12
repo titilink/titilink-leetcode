@@ -25,14 +25,24 @@ public class SingleNumber {
 
     private static int singleNumber(int[] nums) {
         int len = nums.length;
-        BitSet sets = new BitSet();
+        BitSet positiveSets = new BitSet();
+        BitSet negativeSets = new BitSet();
 
         for (int i = 0; i < len; i++) {
-            sets.set(nums[i], sets.get(nums[i]) ? false : true);
+            if ( nums[i] >= 0 ) {
+                positiveSets.set(nums[i], positiveSets.get(nums[i]) ? false : true);
+            } else {
+                negativeSets.set(-nums[i], negativeSets.get(-nums[i]) ? false : true);
+            }
+
         }
-        for ( int i = sets.size() - 1;  i >= 0;  i-- ) {
-            if ( sets.get(i) )
+        for ( int i = positiveSets.size() - 1;  i >= 0;  i-- ) {
+            if ( positiveSets.get(i) )
                 return i;
+        }
+        for ( int i = negativeSets.size() - 1;  i >= 0;  i-- ) {
+            if ( negativeSets.get(i) )
+                return -i;
         }
         return -1;
     }
