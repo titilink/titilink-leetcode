@@ -27,53 +27,21 @@ public class UniquePaths {
         System.out.println(uniquePaths(2, 4));
     }
 
-    private static Map<Position, Integer> roads = new HashMap<>();
-
-    private static int sum = 0;
-
     private static int uniquePaths(int m, int n) {
-        Position finish = new Position(m - 1, n - 1, null );
-        findPosition(finish);
-        return sum;
-    }
-
-    private static boolean findPosition(Position p) {
-        if ( roads.containsKey(p) )
-            return false;
-        roads.put(p, 0);
-        if ( p.x - 1 >= 0 ) {
-            roads.put(p, roads.get(p) + 1);
-            findPosition(new Position(p.x - 1, p.y, p));
+        int[][] d = new int[m][n];
+        for ( int i = 0; i < m; i++) {
+            for ( int j = 0; j < n; j++) {
+                if ( i == 0 && j == 0 )
+                    d[i][j] = 1;
+                else if ( i == 0 && j != 0 )
+                    d[i][j] = d[i][j-1];
+                else if ( j == 0 && i != 0 )
+                    d[i][j] = d[i-1][j];
+                else
+                    d[i][j] = d[i-1][j] + d[i][j-1];
+            }
         }
-        if ( p.y - 1 >= 0 ) {
-            roads.put(p, roads.get(p) + 1);
-            findPosition(new Position(p.x, p.y - 1, p));
-        }
-        if ( p .x == 0 && p.y == 0 ) {
-            sum += 1;
-            return true;
-        }
-        return false;
-    }
-
-    private static class Position {
-        public int x;
-        public int y;
-        public Position next;
-        public Position(int x, int y, Position next) {
-            this.x = x;
-            this.y = y;
-            this.next = next;
-        }
-        public int hashCode() {
-            return (x * 14 + 7 ) * 7;
-        }
-        public boolean equals(Object obj) {
-            Position p = (Position) obj;
-            if ( p == this ) return true;
-            if ( p.x == this.x && this.y == p.y) return true;
-            return false;
-        }
+        return d[m-1][n-1];
     }
 
 }
