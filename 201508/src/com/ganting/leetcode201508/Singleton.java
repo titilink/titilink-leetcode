@@ -1,3 +1,21 @@
+/**
+ * 项目名称: titilink-leetcode
+ * 文件名称: Singleton.java
+ * Date: 2015/8/11
+ * Copyright: 2015 www.titilink.com Inc. All rights reserved.
+ * 注意：本内容仅限于titilink公司内部传阅，禁止外泄以及用于其他的商业目的
+ */
+package com.ganting.leetcode201508;
+
+import java.util.BitSet;
+
+/**
+ * 单例类的实现方式
+ * <p>
+ * author by ganting
+ * date 2015-08-11
+ * since v1.0.0
+ */
 public class Singleton {
 
     /**
