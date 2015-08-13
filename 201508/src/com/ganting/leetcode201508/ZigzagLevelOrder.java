@@ -54,6 +54,7 @@ public class ZigzagLevelOrder {
      */
     private static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> ret = new ArrayList<>();
+        if ( null == root) return ret;
         List<Integer> al = new ArrayList<>();
         Deque<TreeNode> queue = new ArrayDeque<>();
         queue.add(root);
