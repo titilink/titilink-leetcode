@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Given preorder and inorder traversal of a tree, construct the binary tree.
+ * buildTreeByPreAndIn---->Given preorder and inorder traversal of a tree, construct the binary tree.
+ * buildTreeByInAndPost---->Given inorder and postorder traversal of a tree, construct the binary tree.
  * <p>
  *
  * author by ganting
@@ -53,18 +54,18 @@ import java.util.Map;
         return root;
     }
 
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
+    public TreeNode buildTreeByPreAndIn(int[] preorder, int[] inorder) {
         if ( null == preorder || null == inorder )
             return null;
         Map<Integer, Integer> rootIdxMap = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
             rootIdxMap.put(inorder[i], i);
         }
-        return helper(preorder, 0, preorder.length - 1, inorder,
+        return helperByPreAndIn(preorder, 0, preorder.length - 1, inorder,
                 0, inorder.length - 1, rootIdxMap);
     }
 
-    private TreeNode helper(int[] preorder, int preL, int preR,
+    private TreeNode helperByPreAndIn(int[] preorder, int preL, int preR,
             int[] inorder, int inL, int inR, Map<Integer, Integer> rootIdxMap) {
         if ( preL > preR || inL > inR)
             return null;
@@ -74,6 +75,30 @@ import java.util.Map;
                 inorder, inL, rootIdx - 1, rootIdxMap);
         root.right = helper(preorder, rootIdx + preL - inL + 1, preR,
                 inorder, rootIdx + 1, inR, rootIdxMap);
+        return root;
+    }
+    
+    public TreeNode buildTreeByInAndPost(int[] inorder, int[] postorder) {
+        if ( null == postorder || null == inorder )
+            return null;
+        Map<Integer, Integer> rootIdxMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            rootIdxMap.put(inorder[i], i);
+        }
+        return helperByInAndPost(inorder, 0, inorder.length - 1,
+                postorder, 0, postorder.length - 1, rootIdxMap);
+    }
+
+    private TreeNode helperByInAndPost(int[] inorder, int inL, int inR,
+            int[] postorder, int preL, int preR, Map<Integer, Integer> rootIdxMap) {
+        if ( preL > preR || inL > inR)
+            return null;
+        TreeNode root = new TreeNode(postorder[preR]);
+        int rootIdx = rootIdxMap.get(root.val);
+        root.left = helper(inorder, inL, rootIdx - 1,
+                postorder, preL, preL + rootIdx - inL - 1, rootIdxMap);
+        root.right = helper(inorder, rootIdx + 1, inR,
+                postorder, preR - ( inR - rootIdx ), preR - 1, rootIdxMap);
         return root;
     }
 
