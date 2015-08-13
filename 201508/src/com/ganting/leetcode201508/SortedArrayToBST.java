@@ -1,3 +1,22 @@
+/**
+ * 项目名称: titilink-leetcode
+ * 文件名称: SortedArrayToBST.java
+ * Date: 2015/8/11
+ * Copyright: 2015 www.titilink.com Inc. All rights reserved.
+ * 注意：本内容仅限于titilink公司内部传阅，禁止外泄以及用于其他的商业目的
+ */
+package com.ganting.leetcode201508;
+
+import org.junit.Test;
+
+/**
+ * Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+ * <p>
+ * 
+ * author by ganting
+ * date 2015-08-12
+ * since v1.0.0
+ */
 public class SortedArrayToBST {
 
     @Test
